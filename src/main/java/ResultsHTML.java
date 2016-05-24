@@ -21,47 +21,88 @@ public class ResultsHTML {
         PrintWriter printWriter = new PrintWriter(fileWriter);
         int rowCount = 0;
 
-        printWriter.println("<P ALIGN='left'><TABLE BORDER=1>");
+
+        printWriter.println("<!DOCTYPE html>");
+        printWriter.println("<html>");
+        printWriter.println("<head>");
+        printWriter.println("<style>");
+        printWriter.println("table, th, td");
+        printWriter.println("{border: 1px solid black;");
+        printWriter.println("border-collapse: collapse;}");
+        printWriter.println("th, td {padding: 15px;}");
+        printWriter.println("th {text-align: left;}");
+        printWriter.println("</style>");
+        printWriter.println("</head>");
+        printWriter.println("<body>");
+        printWriter.println("<table style='width:300px'>");
         ResultSetMetaData rsmd = null;
-        try {
+        try
+
+        {
             rsmd = rs.getMetaData();
-        } catch (SQLException e) {
+        } catch (
+                SQLException e
+                )
+
+        {
             e.printStackTrace();
         }
+
         int columnCount = 0;
-        try {
+        try
+
+        {
             columnCount = rsmd.getColumnCount();
-        } catch (SQLException e) {
+        } catch (
+                SQLException e
+                )
+
+        {
             e.printStackTrace();
         }
 
-        printWriter.println("<TR>");
+        printWriter.println("<tr>");
 
-        for (int i = 0; i < columnCount; i++) {
+        for (
+                int i = 0;
+                i < columnCount; i++)
+
+        {
             try {
-                printWriter.println("<TH>" + rsmd.getColumnLabel(i + 1) + "</TH>");
+                printWriter.println("<th>" + rsmd.getColumnLabel(i + 1) + "</th>");
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
-        printWriter.println("</TR>");
 
-        try {
+        printWriter.println("</tr>");
+
+        try
+
+        {
             while (rs.next()) {
                 rowCount++;
-                printWriter.println("<TR>");
+                printWriter.println("<tr>");
 
                 for (int i = 0; i < columnCount; i++) {
-                    printWriter.println("<TD>" + rs.getString(i + 1) + "</TD>");
+                    printWriter.println("<td>" + rs.getString(i + 1) + "</td>");
 
 
                 }
-                printWriter.println("</TR>");
+                printWriter.println("</tr>");
+
             }
-        } catch (SQLException e) {
+        } catch (
+                SQLException e
+                )
+
+        {
             e.printStackTrace();
         }
-        printWriter.println("</TABLE></P>");
+
+        printWriter.println("</table>");
+        printWriter.println("</body>");
+        printWriter.println("</html>");
         printWriter.close();
         return rowCount;
     }

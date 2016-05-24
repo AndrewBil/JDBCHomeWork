@@ -1,10 +1,12 @@
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringJoiner;
 
 /**
  * Created by andrew on 24.05.2016.
  */
+@SuppressWarnings("ALL")
 public class Main {
 
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
@@ -25,7 +27,7 @@ public class Main {
                 conn = DriverManager.getConnection(DB_URL, USER, PASS);
                 stmt = conn.createStatement();
                 ResultSet rs = stmt.executeQuery(sql);
-                resultsHTML.write(rs, "sql" + list.indexOf(sql) + ".html");
+                resultsHTML.write(rs, "sql" + new StringJoiner(".").add(new Integer(list.indexOf(sql)).toString()).add("html") );
                 rs.close();
                 stmt.close();
                 conn.close();
