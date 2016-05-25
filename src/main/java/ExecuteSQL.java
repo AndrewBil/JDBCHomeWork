@@ -23,7 +23,7 @@ public class ExecuteSQL {
                 conn = DriverManager.getConnection(DB_URL, USER, PASS);
                 stmt = conn.createStatement();
                 ResultSet rs = stmt.executeQuery(sql);
-                resultsToHTML.write(rs, "sql" + new StringJoiner(".").add(new Integer(list.indexOf(sql)).toString()).add("html"));
+                resultsToHTML.write(rs, sql,System.getProperty("user.dir")+"//results//"+"sqlresult" +new StringJoiner(".").add(new Integer(list.indexOf(sql)).toString()).add("html"));
                 rs.close();
                 stmt.close();
                 conn.close();

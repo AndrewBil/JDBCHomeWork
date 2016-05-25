@@ -14,7 +14,7 @@ import java.sql.SQLException;
  */
 public class ResultsToHTML {
 
-    public int write(ResultSet rs, String fileName) throws IOException {
+    public int write(ResultSet rs, String sql, String fileName) throws IOException {
         FileWriter fileWriter = null;
         WebDriver driver = new FirefoxDriver();
         try {
@@ -36,6 +36,8 @@ public class ResultsToHTML {
         printWriter.println("</style>");
         printWriter.println("</head>");
         printWriter.println("<body>");
+        printWriter.println("<p>"+sql+"</p>");
+        printWriter.println();
         printWriter.println("<table style='width:300px'>");
         ResultSetMetaData rsmd = null;
         try
@@ -90,7 +92,7 @@ public class ResultsToHTML {
         printWriter.println("</body>");
         printWriter.println("</html>");
         printWriter.close();
-        driver.get("file:///"+System.getProperty("user.dir")+"\\"+fileName);
+        driver.get("file:///"+fileName);
         //driver.quit();
         return rowCount;
     }
