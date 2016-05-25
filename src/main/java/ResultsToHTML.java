@@ -1,3 +1,6 @@
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -9,10 +12,11 @@ import java.sql.SQLException;
 /**
  * Created by andrew on 24.05.2016.
  */
-public class ResultsHTML {
+public class ResultsToHTML {
 
     public int write(ResultSet rs, String fileName) throws IOException {
         FileWriter fileWriter = null;
+        WebDriver driver = new FirefoxDriver();
         try {
             fileWriter = new FileWriter(new File(fileName));
         } catch (IOException e) {
@@ -20,8 +24,6 @@ public class ResultsHTML {
         }
         PrintWriter printWriter = new PrintWriter(fileWriter);
         int rowCount = 0;
-
-
         printWriter.println("<!DOCTYPE html>");
         printWriter.println("<html>");
         printWriter.println("<head>");
@@ -37,36 +39,29 @@ public class ResultsHTML {
         printWriter.println("<table style='width:300px'>");
         ResultSetMetaData rsmd = null;
         try
-
         {
             rsmd = rs.getMetaData();
         } catch (
                 SQLException e
                 )
-
         {
             e.printStackTrace();
         }
 
         int columnCount = 0;
         try
-
         {
             columnCount = rsmd.getColumnCount();
         } catch (
                 SQLException e
                 )
-
         {
             e.printStackTrace();
         }
-
         printWriter.println("<tr>");
-
         for (
                 int i = 0;
                 i < columnCount; i++)
-
         {
             try {
                 printWriter.println("<th>" + rsmd.getColumnLabel(i + 1) + "</th>");
@@ -74,39 +69,30 @@ public class ResultsHTML {
                 e.printStackTrace();
             }
         }
-
         printWriter.println("</tr>");
-
         try
-
         {
             while (rs.next()) {
                 rowCount++;
                 printWriter.println("<tr>");
-
                 for (int i = 0; i < columnCount; i++) {
                     printWriter.println("<td>" + rs.getString(i + 1) + "</td>");
-
-
                 }
                 printWriter.println("</tr>");
-
             }
         } catch (
                 SQLException e
                 )
-
         {
             e.printStackTrace();
         }
-
         printWriter.println("</table>");
         printWriter.println("</body>");
         printWriter.println("</html>");
         printWriter.close();
+        driver.get("file:///"+System.getProperty("user.dir")+"\\"+fileName);
+        //driver.quit();
         return rowCount;
     }
-
-
 }
 
